@@ -39,6 +39,7 @@
 <script>
 import customFetch from '@/components/auth/fetch';
 import { toast } from 'vue3-toastify'
+
 export default {
     name: 'Register',
     data() {
@@ -67,14 +68,14 @@ export default {
             })
 
             toast.promise(newUser, {
-                pending: 'working on it ...', // Display while the promise is pending
-                success: 'Your user has been created 👌', // Display on success
-            })
-        }
+              pending: 'working on it ...', // Display while the promise is pending
+              success: 'Your user has been created 👌', // Display on success
+            }).then(r => console.log(r))
+         }
     }
 
 }
 </script>
-<style>
+<style >
 @import './login.css';
 </style>

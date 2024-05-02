@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     async login() {
-      const token = await customFetch('/login', {
+      const token = customFetch('/login', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -48,10 +48,17 @@ export default {
           password: this.password
         })
       });
-      toast.promise(token, {
+      await toast.promise(token, {
         pending: 'Logging in...', // Display while the promise is pending
         success: 'Login successful! 👌', // Display on success
       })
+      // Inside a Vue component
+      token.then(data => {
+        const  token = data.token; const firstName = data.userdata.first_name;
+        this.$cookies.set('token', token, { expires: import.meta.env.VITE_AUTH_TOKEN_EXPIRES });
+        this.$cookies.set('firstName', firstName, { expires: import.meta.env.VITE_AUTH_TOKEN_EXPIRES
+        })})
+      this.$router.push('/');
     }
   }
 

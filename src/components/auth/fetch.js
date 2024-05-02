@@ -8,18 +8,19 @@ const API_BASE_URL = import.meta.env.VITE_AUTH_APP_URL;
 async function customFetch(endpoint, options = {}) {
     try {
         const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
+        const data = await response.json();
         if (!response.ok) {
             // Handle 5XX server errors
             if (response.status >= 500 && response.status < 600) {
                 toast.error("There is a server error");
+                throw "there is some error in the server"
             }
             // Handle non-2xx responses (e.g., 404, 500)
-            toast.error(responseData.message);
+            toast.error(data.message);
+            throw "there is some error in the server"
         }
 
         // Parse response data (assuming JSON)
-        const data = await response.json();
-        console.log(data)
         return data;
     } catch (error) {
         // Handle network errors or other exceptions
